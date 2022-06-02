@@ -23,6 +23,10 @@ RUN useradd -m steam && cd /home/steam && \
                    steamcmd && \
     ln -s /usr/games/steamcmd /usr/bin/steamcmd
 #RUN apt install -y mono-complete
+RUN echo $TZ > /etc/timezone && \
+    apt install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
 RUN apt install -y wine 
 RUN apt install -y xserver-xorg \
                    xvfb
