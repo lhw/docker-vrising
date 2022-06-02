@@ -1,3 +1,5 @@
+<meta name="google-site-verification" content="96pMxHEnIMewhBA-Q__jDA_Q8EX8LQZs-2BUnryWJ_Q" />
+
 <p align="center">
   <a href="https://github.com/TrueOsiris/docker-vrising">
     <img alt="Iroh" src="https://github.com/TrueOsiris/docker-vrising/blob/main/assets/docker-virising.png?raw=true" height="250">
