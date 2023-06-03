@@ -12,7 +12,7 @@ RUN apt update -y && \
     add-apt-repository multiverse && \
     dpkg --add-architecture i386 && \
     apt update -y && \
-    apt-get upgrade -y \
+    apt-get upgrade -y && \
     useradd -m steam && cd /home/steam && \
     echo steam steam/question select "I AGREE" | debconf-set-selections && \
     echo steam steam/license note '' | debconf-set-selections && \
