@@ -12,9 +12,19 @@ if [ -z "$WORLDNAME" ]; then
 	WORLDNAME="world1"
 fi
 
+CreateWinePrefix() {
+  # Weird bug that causes the first wineboot to hang. So lets create it first
+  # and just kill wineboot directly. If this doesn't run long enough some
+  # crypto issues pop up. Missing certificates, missing randomness source
+  timeout 30 \
+    /usr/local/bin/box64 \
+    /usr/local/bin/wine64 \
+    /usr/local/bin/wineboot -f --init
+}
+
 InstallServer() {
   if [ "$ARCH" == "arm64" ] && [ "${ARM_COMPATIBILITY_MODE,,}" = true ]; then
-    ORIG_DEBUGGER=$DEBUGGER
+    local ORIG_DEBUGGER=$DEBUGGER
     export DEBUGGER="/usr/bin/qemu-i386-static"
 
     # Arbitrary number to avoid CPU_MHZ warning due to qemu and steamcmd
@@ -31,12 +41,11 @@ InstallServer() {
     +login anonymous \
     +app_update 1829350 validate \
     +quit
-
-  if [ "$ARCH" == "arm64" ] && [ "${ARM_COMPATIBILITY_MODE,,}" = true ]; then
-    unset CPU_MHZ
-    export DEBUGGER=$ORIG_DEBUGGER
-  fi
 }
+
+if [ ! -d $HOME/.wine ]; then
+  CreateWinePrefix
+fi
 
 if [ ! -f $s/VRisingServer.exe ]; then
   InstallServer
